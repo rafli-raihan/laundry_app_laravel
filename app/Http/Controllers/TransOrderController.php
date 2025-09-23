@@ -208,4 +208,16 @@ class TransOrderController extends Controller
 
         return response()->json($order);
     }
+
+    public function updateOrderStatus(Request $request, $id)
+    {
+        $order = TransOrders::findOrFail($id);
+        $order->order_status = $request->order_status;
+        $order->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Order status updated successfully!'
+        ]);
+    }
 }

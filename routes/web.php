@@ -22,6 +22,7 @@ Route::middleware(['auth', 'adopt'])->group(function () {
     Route::get('/order-json', [App\Http\Controllers\TransOrderController::class, 'getOrders'])
         ->name('order.json');
     Route::get('/order-json/{id}', [App\Http\Controllers\TransOrderController::class, 'getSingleOrder']);
+    Route::put('/order-json-update-status/{id}', [App\Http\Controllers\TransOrderController::class, 'updateOrderStatus']);
     Route::resource('customer', App\Http\Controllers\CustomerController::class);
     Route::resource('order', App\Http\Controllers\TransOrderController::class);
     Route::get("print_struk/{id}", [App\Http\Controllers\TransOrderController::class, 'printStruk'])->name('print_struk');

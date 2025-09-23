@@ -1063,8 +1063,8 @@
         async function saveStatusUpdate(transactionId) {
             const newStatus = document.getElementById("newStatus").value;
             try {
-                const res = await fetch(`/order-update-status/${transactionId}`, {
-                    method: "POST",
+                const res = await fetch(`/order-json-update-status/${transactionId}`, {
+                    method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
