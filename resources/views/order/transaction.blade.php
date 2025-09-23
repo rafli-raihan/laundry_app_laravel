@@ -582,9 +582,7 @@
             document.getElementById("customerAddress").value = selected.getAttribute("data-address") || "";
             document.getElementById("customerId").value = selected.getAttribute("data-id-customer") || "";
         });
-    </script>
-
-    <script>
+    
         let cart = [];
         let transactions = [];
         let transactionCounter = transactions.length + 1;

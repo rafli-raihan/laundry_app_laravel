@@ -184,13 +184,6 @@ class TransOrderController extends Controller
         return view('order.print', compact('details'));
     }
 
-    // public function getLayanan()
-    // {
-    //     $layanan = TypeOfServiceController::all();
-    //     $prices = $layanan->pluck('price', 'service_name');
-    //     return response()->json($prices);
-    // }
-
     public function getOrders()
     {
         $orders = TransOrders::with(['customer', 'details.service'])
