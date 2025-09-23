@@ -42,62 +42,91 @@ class TransOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $dataValidated = $request->validate([
-            'id_customer' => 'required|numeric|exists:customers,id',
-            'order_date' => 'required|date',
-            'order_end_date' => 'nullable|date',
-            'order_status' => 'required|numeric',
-            'order_pay' => 'required|numeric',
-            'order_change' => 'required|numeric',
-            'total' => 'required|numeric',
-            'details' => 'required|array|min:1',
-            'details.*.id_service' => 'required|numeric|exists:type_of_services,id',
-            'details.*.qty' => 'required|numeric|min:1',
-            'details.*.subtotal' => 'required|numeric|min:0',
-        ]);
-
-        // Generate order_code
-        $today = \Carbon\Carbon::parse($request->order_date)->format('dmY');
-        $countDay = \App\Models\TransOrders::whereDate('created_at', $request->order_date)->count() + 1;
-        $runningNumber = str_pad($countDay, 3, '0', STR_PAD_LEFT);
-        $order_code = 'TRLV-' . $today . '-' . $runningNumber;
-
         $order = TransOrders::create([
-            'id_customer' => $request->id_customer,
-            'order_code' => $order_code,
-            'order_date' => $request->order_date,
-            'order_end_date' => $request->order_end_date ?? \Carbon\Carbon::parse($request->order_date)->addDays(2),
-            'order_status' => $request->order_status,
-            'order_pay' => $request->order_pay,
-            'order_change' => $request->order_change,
+            'id_customer' => $request->customer['id'],
+            'order_code' => $request->id,
+            'order_date' => Carbon::now(),
+            'order_end_date' => Carbon::now()->addDays(2),
+            'order_note' => $request->order_note ?? null,
             'total' => $request->total,
+            'order_status' => $request->status
         ]);
 
-        foreach ($request->details as $detail) {
+        foreach ($request->items as $item) {
             TransOrderDetails::create([
                 'id_order' => $order->id,
-                'id_service' => $detail['id_service'],
-                'qty' => $detail['qty'] * 1000, // if you want to store as grams
-                'subtotal' => $detail['subtotal'],
+                'id_service' => $item['id_service'],
+                'qty' => $item['weight'],
+                'price' => $item['price'],
+                'subtotal' => $item['subtotal'],
+                'notes' => $item['notes'] ?? null
             ]);
         }
 
         return response()->json([
-            'success' => true,
-            'order_id' => $order->id,
-            'order_code' => $order->order_code,
+            'status' => true,
+            'message' => 'Data Transaksi berhasil ditambahkan!!'
         ]);
     }
+    //  if (empty($request->total)) {
+    //         Alert::error('Oops...', 'Please Add Service Packet');
+    //         return back();
+    //     }
+
+    //     $order = TransOrders::create([
+    //         'id_customer' => $request->id_customer,
+    //         'order_code' => $request->order_code,
+    //         'order_date' => Carbon::now(),
+    //         'order_end_date' => Carbon::now()->addDays(2),
+    //         'order_note' => $request->order_note,
+    //         'total' => $request->total
+    //     ]);
+
+    //     $id_order = $order->id;
+    //     foreach ($request->id_service as $index => $idService) {
+    //         try {
+    //             $request->notes[$index];
+    //             TransOrderDetails::create([
+    //                 'id_order' => $id_order,
+    //                 'id_service' => $idService,
+    //                 'qty' => $request->qty[$index] * 1000,
+    //                 'subtotal' => $request->subtotal[$index],
+    //                 'notes' => $request->notes[$index]
+    //             ]);
+    //         } catch (\Throwable $th) {
+    //             TransOrderDetails::create([
+    //                 'id_order' => $id_order,
+    //                 'id_service' => $idService,
+    //                 'qty' => $request->qty[$index] * 1000,
+    //                 'subtotal' => $request->subtotal[$index],
+
+    //             ]);
+    //         }
+    //     }
+
+    //     Alert::success('Excellent', 'Add order data successfully');
+    //     return redirect()->route('order.index')->with('success', 'Add order data successfully');
+    // }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $title = "Transaction Order";
-        $order = TransOrders::with(['customer', 'details.service'])->findOrFail($id);
-        // dd($order->details);
-        return view('order.show', compact('title', 'order'));
+        try {
+            $order = TransOrders::with([
+                'customer' => fn($q) => $q->withTrashed(),
+                'transOrderDetails.typeOfService',
+                'transLaundryPickups'
+            ])->findOrFail($id);
+
+            return view('order.show', compact('order'));
+        } catch (\Throwable $e) {
+            return redirect()
+                ->route('order.index')
+                ->with('error_message', 'Gagal memuat detail order: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -161,4 +190,22 @@ class TransOrderController extends Controller
     //     $prices = $layanan->pluck('price', 'service_name');
     //     return response()->json($prices);
     // }
+
+    public function getOrders()
+    {
+        $orders = TransOrders::with(['customer', 'details.service'])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json($orders);
+    }
+
+    public function getSingleOrder($id)
+    {
+        $order = TransOrders::with(['customer', 'details.service'])
+            ->where('id', $id)
+            ->first();
+
+        return response()->json($order);
+    }
 }
