@@ -14,10 +14,24 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'id_level' => 1,
+            'id_level' => 1, // Admin
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => 'admin123',
+        ]);
+
+        User::create([
+            'id_level' => 2,
+            'name' => 'Pimpinan',
+            'email' => 'pimpinan@gmail.com',
+            'password' => 'pimpinan123',
+        ]);
+
+        User::create([
+            'id_level' => 3,
+            'name' => 'Operator',
+            'email' => 'operator@gmail.com',
+            'password' => 'operator123',
         ]);
     }
 }
