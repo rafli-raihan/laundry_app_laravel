@@ -847,14 +847,18 @@
                       "id-ID"
                     )}</p>
                     <span class="status-badge status-${
-                      transaction.order_status
+                      transaction.order_status == 0
+                        ? "pending"
+                        : transaction.order_status == 1
+                        ? "delivered"
+                        : ""
                     }">${
-                                  transaction.order_status == 0
-                                    ? "Baru"
-                                    : transaction.order_status == 1
-                                    ? "Sudah diambil"
-                                    : ""
-                                }</span>
+                        transaction.order_status == 0
+                        ? "Baru"
+                        : transaction.order_status == 1
+                        ? "Sudah diambil"
+                        : ""
+                    }</span>
                 </div>
             `
                 )
@@ -887,7 +891,11 @@
                                       "id-ID"
                                     )}</p>
                                     <span class="status-badge status-${
-                                      transaction.order_status
+                                      transaction.order_status == 0
+                                        ? "pending"
+                                        : transaction.order_status == 1
+                                        ? "delivered"
+                                        : ""
                                     }">${
                                       transaction.order_status == 0
                                         ? "Baru"
@@ -895,9 +903,10 @@
                                         ? "Sudah diambil"
                                         : ""
                                     }</span>
-                                    <button class="btn btn-primary" onclick="updateTransactionStatus('${
-                                      transaction.id
-                                    }')" style="margin-top: 10px; padding: 5px 15px; font-size: 12px;">
+                                    <button 
+                                    class="btn btn-primary" onclick="updateTransactionStatus('${ transaction.id }')" 
+                                    style="margin-top: 10px; padding: 5px 15px; font-size: 12px;" 
+                                    ${transaction.order_status == 1 ? "hidden" : ""}>
                                         📝 Update Status
                                     </button>
                                 </div>
