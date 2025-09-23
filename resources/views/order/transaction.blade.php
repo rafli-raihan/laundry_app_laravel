@@ -561,9 +561,6 @@
             <button class="btn btn-primary" onclick="showReports()" style="margin: 0 10px">
                 📈 Laporan Penjualan
             </button>
-            <button class="btn btn-warning" onclick="manageServices()" style="margin: 0 10px">
-                ⚙️ Kelola Layanan
-            </button>
             <button class="btn btn-danger" onclick="clearCart()" style="margin: 0 10px">
                 🗑️ Bersihkan Keranjang
             </button>
@@ -942,71 +939,6 @@
             document.getElementById("modalContent").innerHTML = reportsHtml;
             document.getElementById("transactionModal").style.display = "block";
         }
-
-        // function manageServices() {
-        //     const servicesHtml = `
-    //         <h2>⚙️ Kelola Layanan</h2>
-    //         <p>Fitur ini memungkinkan Anda mengelola jenis layanan dan harga.</p>
-
-    //         <table class="cart-table">
-    //             <thead>
-    //                 <tr>
-    //                     <th>Layanan</th>
-    //                     <th>Harga</th>
-    //                     <th>Satuan</th>
-    //                     <th>Status</th>
-    //                 </tr>
-    //             </thead>
-    //             <tbody>
-    //                 <tr>
-    //                     <td>Cuci Kering</td>
-    //                     <td>Rp 5.000</td>
-    //                     <td>per kg</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Cuci Setrika</td>
-    //                     <td>Rp 7.000</td>
-    //                     <td>per kg</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Setrika Saja</td>
-    //                     <td>Rp 3.000</td>
-    //                     <td>per kg</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Dry Clean</td>
-    //                     <td>Rp 15.000</td>
-    //                     <td>per kg</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Cuci Sepatu</td>
-    //                     <td>Rp 25.000</td>
-    //                     <td>per pasang</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //                 <tr>
-    //                     <td>Cuci Karpet</td>
-    //                     <td>Rp 20.000</td>
-    //                     <td>per m²</td>
-    //                     <td><span class="status-badge status-ready">Aktif</span></td>
-    //                 </tr>
-    //             </tbody>
-    //         </table>
-
-    //         <div style="text-align: center; margin-top: 20px;">
-    //             <button class="btn btn-primary" onclick="alert('Fitur akan segera tersedia!')">
-    //                 ➕ Tambah Layanan Baru
-    //             </button>
-    //         </div>
-    //     `;
-
-        //     document.getElementById("modalContent").innerHTML = servicesHtml;
-        //     document.getElementById("transactionModal").style.display = "block";
-        // }
 
         async function updateTransactionStatus(transactionId) {
             try {
