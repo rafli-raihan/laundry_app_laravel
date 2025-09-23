@@ -176,9 +176,15 @@ class TransOrderController extends Controller
 
     public function submitPickup(Request $request)
     {
+        $validate = $request->validate([
+            'id_order' => 'required',
+            'id_customer' => 'required',
+            'notes' => 'nullable|string'
+        ]);
+
         $order = TransLaundryPickup::create([
-            'id_order' => $request->id,
-            'id_customer' => $request->customer['id'],
+            'id_order' => $request->id_order,
+            'id_customer' => $request->id_customer,
             'pickup_date' => Carbon::now(),
             'notes' => $request->notes ?? null,
         ]);

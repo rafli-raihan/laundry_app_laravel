@@ -25,7 +25,7 @@ Route::middleware(['auth', 'adopt'])->group(function () {
         ->name('order.json');
     Route::get('/order-json/{id}', [App\Http\Controllers\TransOrderController::class, 'getSingleOrder']);
     Route::put('/order-json-update-status/{id}', [App\Http\Controllers\TransOrderController::class, 'updateOrderStatus']);
-    Route::put('/submit-pickup/', [App\Http\Controllers\TransOrderController::class, 'submitPickup']);
+    Route::post('/submit-pickup/', [App\Http\Controllers\TransOrderController::class, 'submitPickup']);
 
 
     Route::resource('customer', App\Http\Controllers\CustomerController::class);
