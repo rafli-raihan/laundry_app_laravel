@@ -68,46 +68,6 @@ class TransOrderController extends Controller
             'message' => 'Data Transaksi berhasil ditambahkan!!'
         ]);
     }
-    //  if (empty($request->total)) {
-    //         Alert::error('Oops...', 'Please Add Service Packet');
-    //         return back();
-    //     }
-
-    //     $order = TransOrders::create([
-    //         'id_customer' => $request->id_customer,
-    //         'order_code' => $request->order_code,
-    //         'order_date' => Carbon::now(),
-    //         'order_end_date' => Carbon::now()->addDays(2),
-    //         'order_note' => $request->order_note,
-    //         'total' => $request->total
-    //     ]);
-
-    //     $id_order = $order->id;
-    //     foreach ($request->id_service as $index => $idService) {
-    //         try {
-    //             $request->notes[$index];
-    //             TransOrderDetails::create([
-    //                 'id_order' => $id_order,
-    //                 'id_service' => $idService,
-    //                 'qty' => $request->qty[$index] * 1000,
-    //                 'subtotal' => $request->subtotal[$index],
-    //                 'notes' => $request->notes[$index]
-    //             ]);
-    //         } catch (\Throwable $th) {
-    //             TransOrderDetails::create([
-    //                 'id_order' => $id_order,
-    //                 'id_service' => $idService,
-    //                 'qty' => $request->qty[$index] * 1000,
-    //                 'subtotal' => $request->subtotal[$index],
-
-    //             ]);
-    //         }
-    //     }
-
-    //     Alert::success('Excellent', 'Add order data successfully');
-    //     return redirect()->route('order.index')->with('success', 'Add order data successfully');
-    // }
-
 
     /**
      * Display the specified resource.
@@ -211,6 +171,21 @@ class TransOrderController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Order status updated successfully!'
+        ]);
+    }
+
+    public function submitPickup(Request $request)
+    {
+        $order = TransLaundryPickup::create([
+            'id_order' => $request->id,
+            'id_customer' => $request->customer['id'],
+            'pickup_date' => Carbon::now(),
+            'notes' => $request->notes ?? null,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Data Pickup berhasil ditambahkan!!'
         ]);
     }
 }

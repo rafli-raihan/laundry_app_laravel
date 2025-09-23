@@ -19,12 +19,16 @@ Route::middleware(['auth', 'administrator'])->group(function () {
 Route::middleware(['auth', 'adopt'])->group(function () {
     Route::post('/transactions', [App\Http\Controllers\TransOrderController::class, 'store']);
     Route::put('/transactions/{id}', [App\Http\Controllers\TransOrderController::class, 'update']);
+
+    Route::resource('order', App\Http\Controllers\TransOrderController::class);
     Route::get('/order-json', [App\Http\Controllers\TransOrderController::class, 'getOrders'])
         ->name('order.json');
     Route::get('/order-json/{id}', [App\Http\Controllers\TransOrderController::class, 'getSingleOrder']);
     Route::put('/order-json-update-status/{id}', [App\Http\Controllers\TransOrderController::class, 'updateOrderStatus']);
+    Route::put('/submit-pickup/', [App\Http\Controllers\TransOrderController::class, 'submitPickup']);
+
+
     Route::resource('customer', App\Http\Controllers\CustomerController::class);
-    Route::resource('order', App\Http\Controllers\TransOrderController::class);
     Route::get("print_struk/{id}", [App\Http\Controllers\TransOrderController::class, 'printStruk'])->name('print_struk');
 });
 
@@ -33,3 +37,11 @@ Route::middleware(['auth', 'pimpinan'])->group(function () {
     Route::post("report", [App\Http\Controllers\ReportController::class, 'reportFilter'])->name('reportFilter');
     Route::get("print_laporan", [App\Http\Controllers\ReportController::class, 'printLaporan'])->name('print_laporan');
 });
+
+
+/* 
+Roles:
+- Administrator (Super Admin): menambahkan akun user, layanan, dan menentukan serta menambah level dari user.
+- Adopt (Admin / Operator): mengelola data customer, transaksi, dan mencetak struk.
+- Pimpinan: melihat laporan transaksi berdasarkan tanggal tertentu.
+*/

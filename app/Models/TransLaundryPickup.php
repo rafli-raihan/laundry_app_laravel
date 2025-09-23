@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransLaundryPickup extends Model
 {
-    protected $fillable = ['id_order', 'id_customer', 'pickup_date'];
+    protected $fillable = [
+        'id_order',
+        'id_customer',
+        'pickup_date',
+        'notes'
+    ];
 
     public function order()
     {

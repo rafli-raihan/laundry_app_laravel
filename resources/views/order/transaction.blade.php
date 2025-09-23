@@ -1005,13 +1005,79 @@
                 });
                 if (!res.ok) throw new Error("Gagal update status transaksi");
                 alert("Status berhasil diupdate!");
+
+                // Ambil data order yang sudah diupdate
+                const orderRes = await fetch(`/order-json/${transactionId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                    }
+                });
+                if (!orderRes.ok) throw new Error("Gagal mengambil data order setelah update status");
+                const order = await orderRes.json();
+
+                // Jika status sudah diambil (1), tambahkan data pickup
+                if (parseInt(newStatus) === 1) {
+                    await addTransPickupData(order);
+                }
+
                 closeModal();
-                await loadOrders(); // reload data dari database
+                await loadOrders();
             } catch (error) {
                 alert("Gagal update status transaksi!");
                 console.error(error);
             }
         }
+
+        // Implementasi addTransPickupData
+        async function addTransPickupData(order) {
+            const trans_pickup = {
+                id: order.id, // id_order
+                customer: { id: order.customer.id }, // id_customer
+                notes: order.order_note || '', // notes
+            };
+
+            try {
+                const res = await fetch(`/submit-pickup/`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                    },
+                    body: JSON.stringify(trans_pickup)
+                });
+                if (!res.ok) throw new Error("Gagal menyimpan data pickup");
+                const result = await res.json();
+                // Optional: alert(result.message);
+            } catch (error) {
+                console.error("Gagal menyimpan data pickup:", error);
+            }
+        }
+        
+        // async function addTransPickupData(transaction_id, customer_id) {
+        //     const trans_pickup = {
+        //         id_order: transaction_id,
+        //         id_customer: customer_id,
+        //         pickup_date: formatDateYMD(new Date()),
+        //         notes: transaction.notes || ''
+        //     };
+
+        //     try {
+        //         const res = await fetch(`/submit-order/`, {
+        //             method: "POST",
+        //             headers: {
+        //                 "Content-Type": "application/json",
+        //                 "Accept": "application/json",
+        //                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        //             },
+        //             body: JSON.stringify({ trans_pickup })
+        //         });
+        //         if (!res.ok) throw new Error("Gagal menyimpan data transaksi sukses");
+        //         const transaction = await res.json()
+        // }
 
         function closeModal() {
             document.getElementById("transactionModal").style.display = "none";
