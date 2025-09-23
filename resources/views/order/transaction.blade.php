@@ -870,7 +870,7 @@
             const thisYear = today.getFullYear();
 
             const monthlyTransactions = transactions.filter((t) => {
-                const tDate = new Date(t.date);
+                const tDate = new Date(t.order_date);
                 return (
                     tDate.getMonth() === thisMonth && tDate.getFullYear() === thisYear
                 );
@@ -880,20 +880,25 @@
                 (sum, t) => sum + t.total,
                 0
             );
+            console.log(transactions);
 
             const serviceStats = {};
             transactions.forEach((t) => {
-                t.items.forEach((item) => {
-                    if (!serviceStats[item.service]) {
-                        serviceStats[item.service] = {
+                t.details.forEach((item) => {
+                    const serviceName = item.service.service_name; // ambil nama layanan
+
+                    if (!serviceStats[serviceName]) {
+                        serviceStats[serviceName] = {
                             count: 0,
                             revenue: 0
                         };
                     }
-                    serviceStats[item.service].count++;
-                    serviceStats[item.service].revenue += item.subtotal;
+
+                    serviceStats[serviceName].count += item.qty;       // jumlah order per layanan
+                    serviceStats[serviceName].revenue += item.subtotal; // total pendapatan
                 });
             });
+            console.log("A",serviceStats)
 
             const reportsHtml = `
                 <h2>📈 Laporan Penjualan</h2>
@@ -923,17 +928,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        ${Object.entries(serviceStats)
-                          .map(
-                            ([service, stats]) => `
-                                    <tr>
-                                        <td>${service}</td>
-                                        <td>${stats.count}</td>
-                                        <td>Rp ${stats.revenue.toLocaleString()}</td>
-                                    </tr>
-                                `
-                          )
-                          .join("")}
+                         ${Object.entries(serviceStats).map(([service, stats]) => `
+                            <tr>
+                                <td>${service}</td>
+                                <td>${stats.count}</td>
+                                <td>Rp ${stats.revenue.toLocaleString()}</td>
+                            </tr>
+                        `).join('')}
                     </tbody>
                 </table>
             `;
