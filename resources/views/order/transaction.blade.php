@@ -797,10 +797,10 @@
             const totalTransactions = transactions.length;
             const totalRevenue = transactions.reduce((sum, t) => sum + t.total, 0);
             const activeOrders = transactions.filter(
-                (t) => t.status !== "delivered"
+                (t) => t.status !== 1
             ).length;
             const completedOrders = transactions.filter(
-                (t) => t.status === "delivered"
+                (t) => t.status === 1
             ).length;
 
             document.getElementById("totalTransactions").textContent =
