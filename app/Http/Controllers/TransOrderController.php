@@ -49,6 +49,8 @@ class TransOrderController extends Controller
             'order_end_date' => Carbon::now()->addDays(2),
             'order_note' => $request->order_note ?? null,
             'total' => $request->total,
+            'order_pay' => $request->order_pay,
+            'order_change' => $request->order_change,
             'order_status' => $request->status
         ]);
 

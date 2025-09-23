@@ -495,6 +495,17 @@
                         <textarea id="notes" rows="3" placeholder="Catatan khusus untuk pesanan..."></textarea>
                     </div>
 
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="orderPay">Bayar (Rp)</label>
+                            <input type="number" id="orderPay" min="0" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="orderChange">Kembalian (Rp)</label>
+                            <input type="number" id="orderChange" min="0" required readonly />
+                        </div>
+                    </div>
+
                     <button type="button" class="btn btn-primary" onclick="addToCart()"
                         style="width: 100%; margin-bottom: 10px">
                         ➕ Tambah ke Keranjang
@@ -767,11 +778,15 @@
             const customerPhone = document.getElementById("customerPhone").value;
             const customerId = document.getElementById("customerId").value;
             const customerAddress = document.getElementById("customerAddress").value;
+            const orderPay = parseInt(document.getElementById("orderPay").value) || 0;
+            const orderChange = parseInt(document.getElementById("orderChange").value) || 0;
 
             if (!customerName || !customerPhone || cart.length === 0) {
-                alert(
-                    "Mohon lengkapi data pelanggan dan pastikan ada item di keranjang!"
-                );
+                alert("Mohon lengkapi data pelanggan dan pastikan ada item di keranjang!");
+                return;
+            }
+            if (orderPay < cart.reduce((sum, item) => sum + item.subtotal, 0)) {
+                alert("Nominal bayar kurang dari total pembayaran!");
                 return;
             }
 
@@ -787,6 +802,8 @@
                 },
                 items: [...cart],
                 total: total,
+                order_pay: orderPay,
+                order_change: orderChange,
                 date: new Date().toISOString(),
                 status: 0,
             };
@@ -798,8 +815,7 @@
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute(
-                            "content")
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                     },
                     body: JSON.stringify(transaction)
                 })
@@ -1226,6 +1242,14 @@
 
         // panggil saat halaman load
         document.addEventListener("DOMContentLoaded", loadOrders);
+
+        // Hitung kembalian saat input bayar
+        document.getElementById("orderPay").addEventListener("input", function() {
+            const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            const bayar = parseInt(this.value) || 0;
+            const kembalian = bayar - total;
+            document.getElementById("orderChange").value = kembalian > 0 ? kembalian : 0;
+        });
     </script>
 
 </body>
