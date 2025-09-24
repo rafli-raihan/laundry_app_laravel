@@ -35,13 +35,6 @@
                                         <td>
                                             <a href="{{ route('print_struk', $order->id) }}"
                                                 class="btn btn-success btn-sm">Print</a>
-                                            <form action="{{ route('order.destroy', $order->id) }}" method="post"
-                                                id="delete-form-{{ $order->id }}" class="d-inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn btn-danger btn-sm"
-                                                    onclick="confirmAndDelete({{ $order->id }})">Delete</button>
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

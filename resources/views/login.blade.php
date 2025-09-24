@@ -73,7 +73,7 @@
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="index.html" class="logo d-flex align-items-center w-auto">
-                                    <span class="d-none d-lg-block text-center">Halaman Log-in</span>
+                                    <span class="d-none d-lg-block text-center">Log-in</span>
                                 </a>
                             </div><!-- End Logo -->
 
@@ -102,7 +102,7 @@
                                                 <h5>Laundromartinee</h5>
                                             </span>
                                         </h5>
-                                        <p class="text-center small">Masukan email & password anda</p>
+                                        <p class="text-center small">Enter your email and passwords</p>
                                     </div>
                                     <form method="POST" action="{{ route('loginAction') }}"
                                         class="row g-3 needs-validation" novalidate>
@@ -130,7 +130,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn w-100 rounded-4" type="submit"
+                                            <button class="btn btn-primary w-100 rounded-4" type="submit"
                                                 style="background-color: #0C6FFF; color:#fff">Login</button>
                                         </div>
                                     </form>

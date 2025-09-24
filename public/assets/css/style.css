@@ -261,6 +261,43 @@ h6 {
   font-size: 20px;
 }
 
+/* Timpa Bootstrap */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+}
+
+.btn-success:hover {
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.3);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  color: white;
+}
+
+.btn-danger:hover {
+  box-shadow: 0 8px 25px rgba(245, 101, 101, 0.3);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+  color: white;
+}
+
+.btn-warning:hover {
+  box-shadow: 0 8px 25px rgba(237, 137, 54, 0.3);
+}
+
 /* Close Button */
 .btn-close {
   background-size: 25%;

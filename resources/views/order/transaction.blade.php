@@ -399,7 +399,7 @@
         <!-- Header -->
         <div class="header">
             <div class="mb-3" align="right">
-                <a href="{{ route('dashboard.index') }}" class="btn btn-danger">Keluar</a>
+                <a href="{{ route('dashboard.index') }}" class="btn btn-danger" style="text-decoration: none;">Keluar</a>
             </div>
             <h1>
                 <span>
@@ -1267,8 +1267,10 @@
         // Hitung kembalian saat input bayar
         document.getElementById("orderPay").addEventListener("input", function() {
             const total = cart.reduce((sum, item) => sum + item.subtotal, 0);
+            const pajak = total * 0.05; 
+            const totalBayar = total + pajak;
             const bayar = parseInt(this.value) || 0;
-            const kembalian = bayar - total;
+            const kembalian = bayar - totalBayar;
             document.getElementById("orderChange").value = kembalian > 0 ? kembalian : 0;
         });
     </script>
