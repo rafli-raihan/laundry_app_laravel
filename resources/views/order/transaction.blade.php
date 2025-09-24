@@ -423,26 +423,6 @@
             </p>
         </div>
 
-        {{-- <!-- Statistics -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3 id="totalTransactions">0</h3>
-                <p>Total Transaksi</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="totalRevenue">Rp 0</h3>
-                <p>Total Pendapatan</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="activeOrders">0</h3>
-                <p>Pesanan Aktif</p>
-            </div>
-            <div class="stat-card">
-                <h3 id="completedOrders">0</h3>
-                <p>Pesanan Selesai</p>
-            </div>
-        </div> --}}
-
         <!-- Main Content -->
         <div class="main-content">
             <!-- Left Panel: New Transaction -->
@@ -549,6 +529,8 @@
                     <div class="total-section">
                         <h3>Total Pembayaran</h3>
                         <div class="total-amount" id="totalAmount">Rp 0</div>
+                        <h3 style="margin-top: 1rem;">Pajak</h3>
+                        <div class="total-amount" id="taxAmount">Rp. 0</div>
                         <button class="btn btn-success" onclick="processTransaction()"
                             style="width: 100%; margin-top: 15px">
                             Bayar & Proses Transaksi
@@ -579,7 +561,8 @@
                     </div> --}}
                 </div>
 
-                <button class="btn btn-warning" onclick="showAllTransactions()" style="width: 100%; margin-top: 15px">
+                <button class="btn btn-warning" onclick="showAllTransactions()"
+                    style="width: 100%; margin-top: 15px">
                     Lihat Semua Transaksi
                 </button>
             </div>
@@ -665,6 +648,7 @@
             const cartItems = document.getElementById("cartItems");
             const cartSection = document.getElementById("cartSection");
             const totalAmount = document.getElementById("totalAmount");
+            const taxAmount = document.getElementById("taxAmount");
 
             if (cart.length === 0) {
                 cartSection.style.display = "none";
@@ -708,7 +692,11 @@
             });
 
             cartItems.innerHTML = html;
+
+            pajak = total * 0.05;
             totalAmount.textContent = `Rp ${total.toLocaleString()}`;
+            taxAmount.textContent = `Rp ${pajak.toLocaleString()}`
+
         }
 
         function removeFromCart(itemId) {
@@ -745,19 +733,24 @@
                         ${transaction.items
                           .map(
                             (item) => `
-                                                                                                                                                                            <div class="receipt-item">
-                                                                                                                                                                                <span>${item.service} (${item.weight} ${
-                                                                                                                                                                              item.service.includes("Sepatu")
-                                                                                                                                                                                ? "pasang"
-                                                                                                                                                                                : item.service.includes("Karpet")
-                                                                                                                                                                                ? "m²"
-                                                                                                                                                                                : "kg"
-                                                                                                                                                                            })</span>
-                                                                                                                                                                                <span>Rp ${item.subtotal.toLocaleString()}</span>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        `
+                                                                                                                                                                                                                                                                            <div class="receipt-item">
+                                                                                                                                                                                                                                                                                <span>${item.service} (${item.weight} ${
+                                                                                                                                                                                                                                                                              item.service.includes("Sepatu")
+                                                                                                                                                                                                                                                                                ? "pasang"
+                                                                                                                                                                                                                                                                                : item.service.includes("Karpet")
+                                                                                                                                                                                                                                                                                ? "m²"
+                                                                                                                                                                                                                                                                                : "kg"
+                                                                                                                                                                                                                                                                            })</span>
+                                                                                                                                                                                                                                                                                <span>Rp ${item.subtotal.toLocaleString()}</span>
+                                                                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                                                                        `
                           )
                           .join("")}
+
+                          <div class="receipt-item">
+                            <span>PAJAK:</span>
+                            <span>5%</span>
+                        </div>
                     </div>
 
                     <div class="receipt-total">
@@ -818,7 +811,7 @@
                     address: customerAddress,
                 },
                 items: [...cart],
-                total: total,
+                total: total + (total * 0.05),
                 order_pay: orderPay,
                 order_change: orderChange,
                 date: new Date().toISOString(),
@@ -873,7 +866,7 @@
                       .map(
                         (item) =>
                           `${item.service.service_name} - ${item.qty}kg
-                                                                                                                                                                          `
+                                                                                                                                                                                                                                                                          `
                       )
                       .join(", ")}</p>
                     <p>💰 Rp ${transaction.total.toLocaleString()}</p>
@@ -908,43 +901,43 @@
                     ${transactions
                       .map(
                         (transaction) => `
-                                                                                                                                                                        <div class="transaction-item">
-                                                                                                                                                                            <h4>${transaction.order_code} - ${
-                                                                                                                                                                          transaction.customer.customer_name
-                                                                                                                                                                        }</h4>
-                                                                                                                                                                            <p>📞 ${formatPhoneNumberDynamic(transaction.customer.phone)}</p>
-                                                                                                                                                                            <p>🛍️ ${transaction.details
-                                                                                                                                                                              .map(
-                                                                                                                                                                                (item) =>
-                                                                                                                                                                      `${item.service.service_name} - ${item.qty}kg
+                                                                                                                                                                                                                                                                        <div class="transaction-item">
+                                                                                                                                                                                                                                                                            <h4>${transaction.order_code} - ${
+                                                                                                                                                                                                                                                                          transaction.customer.customer_name
+                                                                                                                                                                                                                                                                        }</h4>
+                                                                                                                                                                                                                                                                            <p>📞 ${formatPhoneNumberDynamic(transaction.customer.phone)}</p>
+                                                                                                                                                                                                                                                                            <p>🛍️ ${transaction.details
+                                                                                                                                                                                                                                                                              .map(
+                                                                                                                                                                                                                                                                                (item) =>
+                                                                                                                                                                                                                                                                      `${item.service.service_name} - ${item.qty}kg
                       `
-                                                                                                                                                                              )
-                                                                                                                                                                              .join(", ")}</p>
-                                                                                                                                                                            <p>💰 Rp ${transaction.total.toLocaleString()}</p>
-                                                                                                                                                                            <p>📅 ${new Date(transaction.order_date).toLocaleString(
-                                                                                                                                                                              "id-ID"
-                                                                                                                                                                            )}</p>
-                                                                                                                                                                            <span class="status-badge status-${
-                                                                                                                                                                              transaction.order_status == 0
-                                                                                                                                                                                ? "pending"
-                                                                                                                                                                                : transaction.order_status == 1
-                                                                                                                                                                                ? "delivered"
-                                                                                                                                                                                : ""
-                                                                                                                                                                            }">${
-                                                                                                                                                                              transaction.order_status == 0
-                                                                                                                                                                                ? "Baru"
-                                                                                                                                                                                : transaction.order_status == 1
-                                                                                                                                                                                ? "Sudah diambil"
-                                                                                                                                                                                : ""
-                                                                                                                                                                            }</span>
-                                                                                                                                                                            <button
-                                                                                                                                                                            class="btn btn-primary" onclick="updateTransactionStatus('${ transaction.id }')"
-                                                                                                                                                                            style="margin-top: 10px; padding: 5px 15px; font-size: 12px;"
-                                                                                                                                                                            ${transaction.order_status == 1 ? "hidden" : ""}>
-                                                                                                                                                                                Selesaikan Transaksi
-                                                                                                                                                                            </button>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    `
+                                                                                                                                                                                                                                                                              )
+                                                                                                                                                                                                                                                                              .join(", ")}</p>
+                                                                                                                                                                                                                                                                            <p>💰 Rp ${transaction.total.toLocaleString()}</p>
+                                                                                                                                                                                                                                                                            <p>📅 ${new Date(transaction.order_date).toLocaleString(
+                                                                                                                                                                                                                                                                              "id-ID"
+                                                                                                                                                                                                                                                                            )}</p>
+                                                                                                                                                                                                                                                                            <span class="status-badge status-${
+                                                                                                                                                                                                                                                                              transaction.order_status == 0
+                                                                                                                                                                                                                                                                                ? "pending"
+                                                                                                                                                                                                                                                                                : transaction.order_status == 1
+                                                                                                                                                                                                                                                                                ? "delivered"
+                                                                                                                                                                                                                                                                                : ""
+                                                                                                                                                                                                                                                                            }">${
+                                                                                                                                                                                                                                                                              transaction.order_status == 0
+                                                                                                                                                                                                                                                                                ? "Baru"
+                                                                                                                                                                                                                                                                                : transaction.order_status == 1
+                                                                                                                                                                                                                                                                                ? "Sudah diambil"
+                                                                                                                                                                                                                                                                                : ""
+                                                                                                                                                                                                                                                                            }</span>
+                                                                                                                                                                                                                                                                            <button
+                                                                                                                                                                                                                                                                            class="btn btn-primary" onclick="updateTransactionStatus('${ transaction.id }')"
+                                                                                                                                                                                                                                                                            style="margin-top: 10px; padding: 5px 15px; font-size: 12px;"
+                                                                                                                                                                                                                                                                            ${transaction.order_status == 1 ? "hidden" : ""}>
+                                                                                                                                                                                                                                                                                Selesaikan Transaksi
+                                                                                                                                                                                                                                                                            </button>
+                                                                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                                                                    `
                       )
                       .join("")}
                 </div>
@@ -990,10 +983,10 @@
                         <label>Pilih Status Baru:</label>
                         <select id="newStatus" style="width: 100%; padding: 10px; margin: 10px 0;">
                             ${statusOptions.map(option => `
-                                                                                                                                                                        <option value="${option.value}" ${transaction.order_status == option.value ? "selected" : ""}>
-                                                                                                                                                                            ${option.text}
-                                                                                                                                                                        </option>
-                                                                                                                                                                    `).join("")}
+                                                                                                                                                                                                                                                                        <option value="${option.value}" ${transaction.order_status == option.value ? "selected" : ""}>
+                                                                                                                                                                                                                                                                            ${option.text}
+                                                                                                                                                                                                                                                                        </option>
+                                                                                                                                                                                                                                                                    `).join("")}
                         </select>
                         <label>Catatan:</label>
                         <textarea id="pickupNotes" rows="3" style="width: 100%; padding: 10px; margin: 10px 0;" placeholder="Catatan tambahan..."></textarea>
@@ -1167,12 +1160,12 @@
                     </thead>
                     <tbody>
                          ${Object.entries(serviceStats).map(([service, stats]) => `
-                                                                                                                                                                    <tr>
-                                                                                                                                                                        <td>${service}</td>
-                                                                                                                                                                        <td>${stats.count}</td>
-                                                                                                                                                                        <td>Rp ${stats.revenue.toLocaleString()}</td>
-                                                                                                                                                                    </tr>
-                                                                                                                                                                `).join('')}
+                                                                                                                                                                                                                                                                    <tr>
+                                                                                                                                                                                                                                                                        <td>${service}</td>
+                                                                                                                                                                                                                                                                        <td>${stats.count}</td>
+                                                                                                                                                                                                                                                                        <td>Rp ${stats.revenue.toLocaleString()}</td>
+                                                                                                                                                                                                                                                                    </tr>
+                                                                                                                                                                                                                                                                `).join('')}
                     </tbody>
                 </table>
             `;
