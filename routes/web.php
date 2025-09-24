@@ -39,7 +39,7 @@ Route::middleware(['auth', 'pimpinan'])->group(function () {
 });
 
 
-/* 
+/*
 Roles:
 - Administrator (Super Admin): menambahkan akun user, layanan, dan menentukan serta menambah level dari user.
 - Adopt (Admin / Operator): mengelola data customer, transaksi, dan mencetak struk.

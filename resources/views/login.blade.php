@@ -2,34 +2,45 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Login | Laundromartinee</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <title>Login | Laundromartinee</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
-  <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="{{ asset('assets/img/favicon.png') }}" rel="icon">
+    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-  <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
-  <!-- =======================================================
+    <style>
+        .login-main {
+            background-image: url('https://images.unsplash.com/photo-1582735689369-4fe89db7114c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
+    <!-- =======================================================
   * Template Name: NiceAdmin
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
   * Updated: Apr 20 2024 with Bootstrap v5.3.3
@@ -40,82 +51,104 @@
 
 <body>
 
-  <main>
-    <div class="container">
-
-      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+    <main class="login-main">
         <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="d-flex justify-content-center py-4">
-                <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">Login Form</span>
-                </a>
-              </div><!-- End Logo -->
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-              <div class="card mb-3">
+                            <div class="d-flex justify-content-center py-4">
+                                <a href="index.html" class="logo d-flex align-items-center w-auto">
+                                    <span class="d-none d-lg-block text-center">Halaman Log-in</span>
+                                </a>
+                            </div><!-- End Logo -->
 
-                <div class="card-body">
+                            <div class="card mb-3">
 
-                  <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your email & password to login</p>
-                  </div>
-                  <form method="POST" action="{{ route('loginAction') }}" class="row g-3 needs-validation" novalidate>
-                    @csrf
-                    <div class="col-12">
-                      <label for="yourEmail" class="form-label">Email</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="email" class="form-control" id="yourEmail" value="{{ old('email') }}" required>
-                        <div class="invalid-feedback">Please enter your email.</div>
-                        @error('email')
-                        <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                      </div>
+                                <div class="card-body">
+
+                                    <div class="pt-4 pb-2">
+                                        <h5 class="card-title text-center pb-0 fs-4">
+                                            <span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                                    viewBox="0 0 24 24">
+                                                    <g fill="none" fill-rule="evenodd" clip-rule="evenodd">
+                                                        <path fill="#020202"
+                                                            d="M23.975 20.409c0-1.623-.06-3.276-.08-4.91V10.61c0-2.224-.09-4.649-.09-6.522V3.086c0-.35-.11-.922-.181-1.393v-.661a1 1 0 0 0-.13-.31A1.43 1.43 0 0 0 22.632.2A3.8 3.8 0 0 0 21.52 0h-3.777c-3.687.19-7.464.21-11.081.32c-1.633.04-3.226.11-4.73.211a.34.34 0 0 0-.32.36a.35.35 0 0 0 .32.321c1.283-.07 2.626-.11 4.008-.14c-.06.501-.16 1.002-.22 1.543q-.086.643-.08 1.292c.024.502.104 1 .24 1.483c-.921.1-1.823.21-2.735.26q-1.077.075-2.154 0c0-.47 0-.931.05-1.332V2.314c0-.43.05-.861.11-1.292a.29.29 0 0 0-.22-.36a.29.29 0 0 0-.33.25c-.07.44-.11.901-.141 1.352c0 .672 0 1.343-.07 2.004C.39 4.74.34 5.27.31 5.841c0 .872-.07 1.814-.1 2.745c-.03.932-.05 2.094 0 2.926c.05.831 0 1.653 0 2.465s0 1.522-.06 2.454l-.1 3.006c0 .661-.07 2.174 0 3.096c-.017.364.048.726.19 1.062c.348.237.76.363 1.182.36c1.162.1 3.106 0 3.577 0l2.675-.13h1.603c1.282 0 2.595.06 3.827 0h5.01c.7 0 1.422 0 2.194-.08c.43 0 1.843 0 2.444-.06c.217-.017.425-.093.601-.22c.268-.295.445-.66.511-1.052q.147-.998.11-2.004M17.773.932h1.853l1.844.07q.375.012.741.09c.16.021.305.1.411.22v.592c.05.38.1.741.13 1.112q.056.545.05 1.092V5.85c-2.665-.16-5.34-.48-8.015-.631c-.691 0-1.382-.06-2.064-.07c0-.501.08-1.002.12-1.483q.037-.556 0-1.112a8.6 8.6 0 0 0-.2-1.553c1.713 0 3.427 0 5.13-.07m-11.101.12l5.28-.05c-.05.42-.12.842-.16 1.262a6 6 0 0 0 0 .702v.701q.04.725.16 1.443h-.802c-.831 0-1.663 0-2.494.05c-.561 0-1.133.06-1.694.11h-.26V4.098c0-.401.06-.832.06-1.253a10.6 10.6 0 0 0-.19-1.813zm16.15 9.558c0 1.002 0 1.934-.07 2.765s0 1.413 0 2.134c0 1.623.07 3.277.05 4.89q.043.816 0 1.633a1.4 1.4 0 0 1-.15.59c-.591.071-2.004 0-2.394.061c-.742.05-1.443.07-2.124.08c-1.664 0-3.216-.06-5.01 0H9.317c-.561 0-1.122 0-1.663.07l-2.715.15H2.754a12 12 0 0 1-1.683-.07h-.14v-.05c-.06-.801 0-2.665 0-3.406l.05-3.006v-2.475c0-.75-.05-1.542-.05-2.424V8.656c0-.811 0-1.643.05-2.414q1.086.162 2.184.16c1.954 0 1.002-.11 8.015-.14h3.557c2.695.07 5.39.21 8.075.23c0 1.363.02 2.776.01 4.118" />
+                                                        <path fill="#020202"
+                                                            d="M18.324 12.333a7 7 0 0 0-1.002-2.304a4.74 4.74 0 0 0-1.883-1.703a4 4 0 0 0-.862-.31q-.646-.12-1.303-.151a.35.35 0 0 0-.32.35a.34.34 0 0 0 .31.361q.616.049 1.223.17q.368.075.701.251c.639.338 1.17.848 1.533 1.473a6.3 6.3 0 0 1 .791 2.004c.15.724.19 1.467.12 2.204a6.3 6.3 0 0 1-.53 2.104a6.5 6.5 0 0 1-2.275 2.725a5 5 0 0 1-3.316.882a6.2 6.2 0 0 1-3.366-1.473A5.8 5.8 0 0 1 6.28 15.8a5.8 5.8 0 0 1 .08-2.545a7 7 0 0 1 .922-2.404a5 5 0 0 1 1.833-1.834a5.1 5.1 0 0 1 2.646-.47a.3.3 0 0 0 .247-.5a.3.3 0 0 0-.207-.102a5.7 5.7 0 0 0-3.006.44a5.7 5.7 0 0 0-2.254 2.075a8.48 8.48 0 0 0-1.313 5.57a6.43 6.43 0 0 0 2.124 3.798a7.25 7.25 0 0 0 4.008 1.753a6 6 0 0 0 4.078-1.092a7.5 7.5 0 0 0 2.524-3.266a7.4 7.4 0 0 0 .531-2.435a8.4 8.4 0 0 0-.17-2.455" />
+                                                        <path fill="#0c6fff"
+                                                            d="M7.313 14.307c.26-.108.543-.146.822-.11q.414.06.811.19c.551.17 1.092.421 1.643.641q.887.375 1.824.592a6.35 6.35 0 0 0 3.296-.31a4.9 4.9 0 0 0 1.563-1.003c.27-.38.07-1.002-.32-.791a4.5 4.5 0 0 1-1.544.851a5.5 5.5 0 0 1-2.755.09c-1.002-.19-2.004-.68-3.005-1.002a5.8 5.8 0 0 0-1.463-.23a2.35 2.35 0 0 0-.932.18q-.314.092-.581.281c-.42.28-.471.862-.14.892q.381-.16.781-.27" />
+                                                        <path fill="#020202"
+                                                            d="M17.292 3.507c.38.06.731.16 1.122.2h.491l.481-.06a10 10 0 0 0 1.132-.31a.33.33 0 0 0 .29-.331a.34.34 0 0 0-.38-.3c-.38 0-.751-.081-1.142-.091a5 5 0 0 0-.762 0q-.647.12-1.272.33a.3.3 0 0 0-.28.321a.3.3 0 0 0 .32.24" />
+                                                    </g>
+                                                </svg>
+                                                <h5>Laundromartinee</h5>
+                                            </span>
+                                        </h5>
+                                        <p class="text-center small">Masukan email & password anda</p>
+                                    </div>
+                                    <form method="POST" action="{{ route('loginAction') }}"
+                                        class="row g-3 needs-validation" novalidate>
+                                        @csrf
+                                        <div class="col-12">
+                                            <label for="yourEmail" class="form-label">Email</label>
+                                            <div class="input-group has-validation">
+                                                {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
+                                                <input type="email" name="email" class="form-control rounded-3"
+                                                    id="yourEmail" value="{{ old('email') }}" required>
+                                                <div class="invalid-feedback">Please enter your email.</div>
+                                                @error('email')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label for="yourPassword" class="form-label">Password</label>
+                                            <input type="password" name="password" class="form-control rounded-3"
+                                                id="yourPassword" required>
+                                            <div class="invalid-feedback">Please enter your password!</div>
+                                            @error('password')
+                                                <small class="text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn w-100 rounded-4" type="submit"
+                                                style="background-color: #0C6FFF; color:#fff">Login</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
-                      @error('password')
-                      <small class="text-danger">{{ $message }}</small>
-                      @enderror
-                    </div>
-                    <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Login</button>
-                    </div>
-                  </form>
-
                 </div>
-              </div>
-            </div>
-          </div>
+
+            </section>
+
         </div>
+    </main><!-- End #main -->
 
-      </section>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-    </div>
-  </main><!-- End #main -->
+    <!-- Vendor JS Files -->
+    <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
+    <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
+    <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Vendor JS Files -->
-  <script src="{{ asset('assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/chart.js/chart.umd.js') }}"></script>
-  <script src="{{ asset('assets/vendor/echarts/echarts.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/quill/quill.js') }}"></script>
-  <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-  <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
-  <script src="{{ asset('assets/vendor/php-email-form/validate.js') }}"></script>
-
-  <!-- Template Main JS File -->
-  <script src="{{ asset('assets/js/main.js') }}"></script>
-  @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@11"])
+    <!-- Template Main JS File -->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@11'])
 
 </body>
 
