@@ -493,7 +493,7 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="serviceWeight">Berat/Jumlah</label>
+                            <label for="serviceWeight">Berat/Kg</label>
                             <input type="number" id="serviceWeight" step="0.1" min="0.1" required />
                         </div>
                         <div class="form-group">
@@ -745,17 +745,17 @@
                         ${transaction.items
                           .map(
                             (item) => `
-                                                                                                                                                                        <div class="receipt-item">
-                                                                                                                                                                            <span>${item.service} (${item.weight} ${
-                                                                                                                                                                          item.service.includes("Sepatu")
-                                                                                                                                                                            ? "pasang"
-                                                                                                                                                                            : item.service.includes("Karpet")
-                                                                                                                                                                            ? "m²"
-                                                                                                                                                                            : "kg"
-                                                                                                                                                                        })</span>
-                                                                                                                                                                            <span>Rp ${item.subtotal.toLocaleString()}</span>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    `
+                                                                                                                                                                            <div class="receipt-item">
+                                                                                                                                                                                <span>${item.service} (${item.weight} ${
+                                                                                                                                                                              item.service.includes("Sepatu")
+                                                                                                                                                                                ? "pasang"
+                                                                                                                                                                                : item.service.includes("Karpet")
+                                                                                                                                                                                ? "m²"
+                                                                                                                                                                                : "kg"
+                                                                                                                                                                            })</span>
+                                                                                                                                                                                <span>Rp ${item.subtotal.toLocaleString()}</span>
+                                                                                                                                                                            </div>
+                                                                                                                                                                        `
                           )
                           .join("")}
                     </div>
@@ -873,7 +873,7 @@
                       .map(
                         (item) =>
                           `${item.service.service_name} - ${item.qty}kg
-                                                                                                                                                                      `
+                                                                                                                                                                          `
                       )
                       .join(", ")}</p>
                     <p>💰 Rp ${transaction.total.toLocaleString()}</p>
@@ -908,43 +908,43 @@
                     ${transactions
                       .map(
                         (transaction) => `
-                                                                                                                                                                    <div class="transaction-item">
-                                                                                                                                                                        <h4>${transaction.order_code} - ${
-                                                                                                                                                                      transaction.customer.customer_name
-                                                                                                                                                                    }</h4>
-                                                                                                                                                                        <p>📞 ${formatPhoneNumberDynamic(transaction.customer.phone)}</p>
-                                                                                                                                                                        <p>🛍️ ${transaction.details
-                                                                                                                                                                          .map(
-                                                                                                                                                                            (item) =>
-                                                                                                                                                                  `${item.service.service_name} - ${item.qty}kg
+                                                                                                                                                                        <div class="transaction-item">
+                                                                                                                                                                            <h4>${transaction.order_code} - ${
+                                                                                                                                                                          transaction.customer.customer_name
+                                                                                                                                                                        }</h4>
+                                                                                                                                                                            <p>📞 ${formatPhoneNumberDynamic(transaction.customer.phone)}</p>
+                                                                                                                                                                            <p>🛍️ ${transaction.details
+                                                                                                                                                                              .map(
+                                                                                                                                                                                (item) =>
+                                                                                                                                                                      `${item.service.service_name} - ${item.qty}kg
                       `
-                                                                                                                                                                          )
-                                                                                                                                                                          .join(", ")}</p>
-                                                                                                                                                                        <p>💰 Rp ${transaction.total.toLocaleString()}</p>
-                                                                                                                                                                        <p>📅 ${new Date(transaction.order_date).toLocaleString(
-                                                                                                                                                                          "id-ID"
-                                                                                                                                                                        )}</p>
-                                                                                                                                                                        <span class="status-badge status-${
-                                                                                                                                                                          transaction.order_status == 0
-                                                                                                                                                                            ? "pending"
-                                                                                                                                                                            : transaction.order_status == 1
-                                                                                                                                                                            ? "delivered"
-                                                                                                                                                                            : ""
-                                                                                                                                                                        }">${
-                                                                                                                                                                          transaction.order_status == 0
-                                                                                                                                                                            ? "Baru"
-                                                                                                                                                                            : transaction.order_status == 1
-                                                                                                                                                                            ? "Sudah diambil"
-                                                                                                                                                                            : ""
-                                                                                                                                                                        }</span>
-                                                                                                                                                                        <button
-                                                                                                                                                                        class="btn btn-primary" onclick="updateTransactionStatus('${ transaction.id }')"
-                                                                                                                                                                        style="margin-top: 10px; padding: 5px 15px; font-size: 12px;"
-                                                                                                                                                                        ${transaction.order_status == 1 ? "hidden" : ""}>
-                                                                                                                                                                            Selesaikan Transaksi
-                                                                                                                                                                        </button>
-                                                                                                                                                                    </div>
-                                                                                                                                                                `
+                                                                                                                                                                              )
+                                                                                                                                                                              .join(", ")}</p>
+                                                                                                                                                                            <p>💰 Rp ${transaction.total.toLocaleString()}</p>
+                                                                                                                                                                            <p>📅 ${new Date(transaction.order_date).toLocaleString(
+                                                                                                                                                                              "id-ID"
+                                                                                                                                                                            )}</p>
+                                                                                                                                                                            <span class="status-badge status-${
+                                                                                                                                                                              transaction.order_status == 0
+                                                                                                                                                                                ? "pending"
+                                                                                                                                                                                : transaction.order_status == 1
+                                                                                                                                                                                ? "delivered"
+                                                                                                                                                                                : ""
+                                                                                                                                                                            }">${
+                                                                                                                                                                              transaction.order_status == 0
+                                                                                                                                                                                ? "Baru"
+                                                                                                                                                                                : transaction.order_status == 1
+                                                                                                                                                                                ? "Sudah diambil"
+                                                                                                                                                                                : ""
+                                                                                                                                                                            }</span>
+                                                                                                                                                                            <button
+                                                                                                                                                                            class="btn btn-primary" onclick="updateTransactionStatus('${ transaction.id }')"
+                                                                                                                                                                            style="margin-top: 10px; padding: 5px 15px; font-size: 12px;"
+                                                                                                                                                                            ${transaction.order_status == 1 ? "hidden" : ""}>
+                                                                                                                                                                                Selesaikan Transaksi
+                                                                                                                                                                            </button>
+                                                                                                                                                                        </div>
+                                                                                                                                                                    `
                       )
                       .join("")}
                 </div>
@@ -990,10 +990,10 @@
                         <label>Pilih Status Baru:</label>
                         <select id="newStatus" style="width: 100%; padding: 10px; margin: 10px 0;">
                             ${statusOptions.map(option => `
-                                                                                                                                                                    <option value="${option.value}" ${transaction.order_status == option.value ? "selected" : ""}>
-                                                                                                                                                                        ${option.text}
-                                                                                                                                                                    </option>
-                                                                                                                                                                `).join("")}
+                                                                                                                                                                        <option value="${option.value}" ${transaction.order_status == option.value ? "selected" : ""}>
+                                                                                                                                                                            ${option.text}
+                                                                                                                                                                        </option>
+                                                                                                                                                                    `).join("")}
                         </select>
                         <label>Catatan:</label>
                         <textarea id="pickupNotes" rows="3" style="width: 100%; padding: 10px; margin: 10px 0;" placeholder="Catatan tambahan..."></textarea>
@@ -1167,12 +1167,12 @@
                     </thead>
                     <tbody>
                          ${Object.entries(serviceStats).map(([service, stats]) => `
-                                                                                                                                                                <tr>
-                                                                                                                                                                    <td>${service}</td>
-                                                                                                                                                                    <td>${stats.count}</td>
-                                                                                                                                                                    <td>Rp ${stats.revenue.toLocaleString()}</td>
-                                                                                                                                                                </tr>
-                                                                                                                                                            `).join('')}
+                                                                                                                                                                    <tr>
+                                                                                                                                                                        <td>${service}</td>
+                                                                                                                                                                        <td>${stats.count}</td>
+                                                                                                                                                                        <td>Rp ${stats.revenue.toLocaleString()}</td>
+                                                                                                                                                                    </tr>
+                                                                                                                                                                `).join('')}
                     </tbody>
                 </table>
             `;
